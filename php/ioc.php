@@ -144,6 +144,54 @@ class IOCContainer{
 
 }
 
+//构建一个人的类和一个狗的类
+class People{
+
+    public $dog = null;
+    public function __construct(){
+
+        $this->dog = new Dog();
+    }
+    public function putDog(){
+
+       return $this->dog->dogCall(); 
+    }
+
+}
+
+class Dog{
+
+    public function dogCall(){
+
+        return 'wang'; 
+    }
+}
+//以上没有使用控制反转，那people类要执行putDog()这个方法，需要依赖Dog类，在people中利用构造函数来添加这个Dog依赖
+$people = new People();
+$people->putDog();
+
+//使用控制反转，依赖注入
+class People{
+
+    public $dog = null;
+
+    //people类通过构造参数声明自己需要的依赖类，由容器自动注入，这样就实现了程序有效的解耦
+    public function __construct(Dog $dog){
+
+        $this->dog = $dog; 
+    }
+    public function putDog(){
+        return $this->dog->doCall(); 
+    }
+}
+
+//larave容器依赖注入的实现：匿名函数也叫闭包函数，允许临时创建一个没有指定名称的函数。反射：PHP5以上版本具有完整的反射API，添加了对类、接口、函数、方法和扩展进行反向工程的能力，此外，反射API提供了方法来取出函数，类和方法中的文档注释
+
+
+
+
+
+
 
 
 
